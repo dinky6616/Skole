@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+div.body{
+    padding: 0;
+    margin: 0;
+}
+div.page{
+            display: grid;
+            height: 100vh;
+            grid-template-rows: 1fr 10fr 1fr;
+            grid-template-columns: 1fr 3fr;
+            grid-template-areas: 'Header Header'
+            'Menu MainContent'
+            'Menu Footer';
+        }
+div.Header{
+            background-color: teal;
+            grid-area: Header;
+}
+div.Menu{
+            background-color: tomato;
+            grid-area: Menu;
+            /* the grid area is telling it that this div is a grid */
+}
+div.MainContent{
+            grid-area: MainContent;
+            background-color: rgb(255, 225, 93);
+}
+div.Footer{
+            background-color: rgb(177, 130, 238);
+            grid-area: Footer;
+}
+        
+    </style>
+</head>
+<body> 
+<div class="page">
+    <div class="Header">Header</div>
+    <div class="Menu">Menu</div>
+    <div class="MainContent">MainContent</div>
+    <div class="Footer">Footer</div>
+</div>
+</body>
+</html>
