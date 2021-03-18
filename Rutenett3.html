@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Rutenett</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <style>
+body {
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+}
+.rutenett {
+    display: grid;
+    grid-template-rows: 100px 100px 100px;
+    grid-template-columns: 100px 100px 100px;
+}
+
+.boksY{
+    background-color:#90A1FF;
+    border: 0.5px dotted gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.boksX{
+    background-color:#90D8FF;
+    border: 0.5px dotted gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+    </style>
+    <body>
+        <div class="rutenett">
+        <!-- første rad -->
+            <div class="boksY" id="bY"></div>
+            <div class="boksX" id="Malene"></div>
+            <div class="boksY" id="b1"></div>
+        <!-- andre rad -->
+            <div class="boksX" id="Chris"></div>
+            <div class="boksY" id="b2"></div>
+            <div class="boksX" id="Mikael"></div>
+        <!-- tredje rad -->
+            <div class="boksY" id="b3"></div>
+            <div class="boksX" id="Alexander"></div>
+            <div class="boksY" id="b4"></div>
+        </div>
+
+        <button onclick="bilder()">Vis koderne!</button>
+        <button onclick="skiftFarge()">Random</button>
+
+        
+        <script>
+            // This is the function that calls 4 images when pressing Vis koderne! button.
+            function bilder(){
+                document.getElementById('Chris').innerHTML = '<img src="https://i.imgur.com/ftnepti.jpg"/>';
+                document.getElementById('Malene').innerHTML = '<img src="https://i.imgur.com/X5ngd5L.jpg"/>';
+                document.getElementById('Mikael').innerHTML = '<img src="https://i.imgur.com/ZthfmgZ.jpg"/>';
+                document.getElementById('Alexander').innerHTML = '<img src="https://i.imgur.com/Ay8TGSu.jpg"/>';
+               } 
+            // This is the function that changes color of boxes. For at den skal lage random måtte jeg fjerne '' symbolet, da gikk den istedet videre til neste funksjon for og lage en random farge! :)
+            function skiftFarge(){
+                document.getElementById('bY').style.backgroundColor=generateRandomColor();
+                document.getElementById('b1').style.backgroundColor=generateRandomColor();
+                document.getElementById('b2').style.backgroundColor=generateRandomColor();
+                document.getElementById('b3').style.backgroundColor=generateRandomColor();
+                document.getElementById('b4').style.backgroundColor=generateRandomColor();
+                document.getElementById('Malene').style.backgroundColor=generateRandomColor();
+                document.getElementById('Chris').style.backgroundColor=generateRandomColor();
+                document.getElementById('Mikael').style.backgroundColor=generateRandomColor();
+                document.getElementById('Alexander').style.backgroundColor=generateRandomColor();
+                }
+            //Jeg lånte mattekode fra dev.to
+            function generateRandomColor(){
+                var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
+                return randomColor;
+                }
+        </script>
+
+    </body>
+</html>
