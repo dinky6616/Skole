@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Ukesoppgave 2</title>
+    <link href='https://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet'>
+    <style>
+        body{
+            background-image: url('https://media4.giphy.com/media/1oE3Ee4299mmXN8OYb/source.gif') ;
+            background-color: yellowgreen;
+            margin:10px;
+            padding:0;
+        }
+        #error{
+            color: red;
+            font-weight: bold;
+        }
+        .finished{
+            font-size: 25px;
+        }
+        .bAdj{
+            background-image: radial-gradient(green,blue);
+            width: 100px;
+            height: 40px;
+            font-family: 'Audiowide';
+        }
+        .bAdj:hover{
+            background-image: radial-gradient(yellow,blue);
+        }
+        .bNoun{
+            background-image: radial-gradient(yellow,purple);
+            width: 100px;
+            height: 40px;
+            font-family: 'Audiowide';
+        }
+        .bNoun:hover{
+            background-image: radial-gradient(green,red);
+            
+        }
+        .bName{
+            background-image: radial-gradient(rgb(238, 255, 0),rgb(60, 255, 0));
+            width: 100px;
+            height: 40px;
+            font-family: 'Audiowide';
+            
+        }
+        .bName:hover{
+            background-image: radial-gradient(white,black);
+            
+        }
+        .bruktOrd{
+            text-decoration: line-through;
+        }
+        #s{
+            visibility: hidden;
+        }
+        #story {
+            background-image: linear-gradient(rgb(21, 255, 0), rgb(0, 26, 255));
+            width: fit-content;
+            font-family: 'Audiowide';
+        }
+        #info {
+            background-image: radial-gradient(rgb(21, 255, 0), rgb(0, 26, 255));
+            width: fit-content;
+            font-family: 'Audiowide';
+        }
+        p{
+            background-image: linear-gradient(rgb(21, 255, 0), rgb(0, 26, 255));
+            width: fit-content;
+            font-family: 'Audiowide';
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <!-- Historie tid:
+    
+|Mikael| had always loved 'old-fashioned'! Exeter with its 'leaking', little -lake-s. 
+It was a place where he felt 'incredible' anxious.
+
+He was a 'cold-blooded', cowardly, squash drinker with 'wobbly' eyebrows and 'ruddy' ankles. 
+
+His 'intense' friends saw him as a 'joyous', jealous -juggler-. 
+Once, he had even helped a -naughty- puppy cross the 'big' road. 
+That's the sort of -man- he was.
+
+|Chris| gazed with the affection of 5157 'indescribable' pong pigeons. 
+He said, in 'hushed' tones, "I love 'happy' you and I want a 'soft' hug."
+
+|Mikael| looked back, even more 'fuzzy' and still fingering the 'damp' -guillotine-. 
+"|Chris|, I ate your 'little' puppy" he replied.
+    
+
+    
+    -->
+
+    <script>
+        // Model
+        var names = ['___', '___'];
+        var adjectives = ['___', '___', '___', '___', '___', '___', '___', '___', '___', '___', '___', '___', '___', '___', '___'];
+        var nouns = ['___', '___', '___', '___'];
+        var nameCounter = 0;
+        var adjectiveCounter = 0;
+        var nounCounter = 0;
+        var info = "Click the name you want to be the first name in the story.";
+        var finished = '';
+        var disabled = '';
+        var endS = 'hidden';
+
+        // view 
+        updateView();
+        function updateView(){
+            document.getElementById('app').innerHTML = `
+            <a>
+                <img src="https://i.imgur.com/OODYPkJ.png" />
+            </a> 
+            <div id="story" class="${finished}"> ${names[0]} had always loved ${adjectives[0]} Exeter with it's ${adjectives[1]}, little ${nouns[0]}<span ${endS}>s</span>.
+            <br/> It was a place where he felt ${adjectives[2]} anxious.
+            <br/> He was a ${adjectives[3]}, cowardly, squash drinker with ${adjectives[4]} eyebrows and ${adjectives[5]} ankles.
+            <br/> His ${adjectives[6]} friends saw him as a ${adjectives[7]}, jealous ${nouns[1]}.
+            <br/> Once, he had even helped a ${adjectives[8]} puppy cross the ${adjectives[9]} road.
+            <br/> That's the sort of ${nouns[2]} he was.
+            <br/> ${names[1]} gazed with the affection of 5157 pong pigeons.
+            <br/> He said, in ${adjectives[10]} tones, "I love you and I want a ${adjectives[11]} hug.
+            <br/>${names[0]} looked back, even more ${adjectives[12]} and still fingering the ${adjectives[13]} ${nouns[3]}.
+            <br/> "${names[1]} I ate your ${adjectives[14]} puppy" he replied.
+            <hr/>
+            <div id="info">${info}</div>
+            <hr/>
+            </div>
+ 
+            <div class="knapper">
+                <p>Names you can choose for your story: </p>
+                <button ${disabled} class="bName" onclick="chooseName(this)">Alexander</button>    
+                <button ${disabled} class="bName" onclick="chooseName(this)">Chris</button>    
+                <button ${disabled} class="bName" onclick="chooseName(this)">Malene</button>    
+                <button ${disabled} class="bName" onclick="chooseName(this)">Mikael</button>    
+                <hr/>
+                <p>Nouns for the story: </p>
+                <button ${disabled} class="bNoun" onclick="chooseNoun(this)">juggler</button>  
+                <button ${disabled} class="bNoun" onclick="chooseNoun(this)">lake</button>
+                <button ${disabled} class="bNoun" onclick="chooseNoun(this)">guillotine</button>
+                <button ${disabled} class="bNoun" onclick="chooseNoun(this)">man</button>
+                <hr/>
+                <p>Adjectives for the story: </p>
+                <button ${disabled} class="bAdj" onclick="chooseAdjective(this)">intense</button>
+                <button ${disabled} class="bAdj" onclick="chooseAdjective(this)">hushed</button>    
+                <button ${disabled} class="bAdj" onclick="chooseAdjective(this)">fuzzy</button>
+                <br/>
+                <button ${disabled} class="bAdj" onclick="chooseAdjective(this)">wobbly</button>
+                <button ${disabled} class="bAdj" onclick="chooseAdjective(this)">damp</button>  
+                <button ${disabled} class="bAdj" onclick="chooseAdjective(this)">leaking</button>
+                <br/>    
+                <button ${disabled} class="bAdj" onclick="chooseAdjective(this)">incredibly</button> 
+                <button ${disabled} class="bAdj" onclick="chooseAdjective(this)">ruddy</button>  
+                <button ${disabled} class="bAdj" onclick="chooseAdjective(this)">big</button>     
+                <br/>
+                <button ${disabled} class="bAdj" onclick="chooseAdjective(this)">old-fashioned</button>
+                <button ${disabled} class="bAdj" onclick="chooseAdjective(this)">little</button> 
+                <button ${disabled} class="bAdj" onclick="chooseAdjective(this)">naughty</button> 
+                <br/>     
+                <button ${disabled} class="bAdj" onclick="chooseAdjective(this)">cold-blooded</button>  
+                <button ${disabled} class="bAdj" onclick="chooseAdjective(this)">soft</button>
+                <button ${disabled} class="bAdj" onclick="chooseAdjective(this)">joyous</button>
+                <br/>
+
+    
+            </div>
+            <hr/>
+            <div id="error"></div> `;
+        }
+        function updateStory(){
+            document.getElementById('story').innerHTML = ` 
+            ${names[0]} had always loved ${adjectives[0]} Exeter with it's ${adjectives[1]}, little ${nouns[0]}<span ${endS}>s</span>.
+            <br/> It was a place where he felt ${adjectives[2]} anxious.
+            <br/> He was a ${adjectives[3]}, cowardly, squash drinker with ${adjectives[4]} eyebrows and ${adjectives[5]} ankles.
+            <br/> His ${adjectives[6]} friends saw him as a ${adjectives[7]}, jealous ${nouns[1]}.
+            <br/> Once, he had even helped a ${adjectives[8]} puppy cross the ${adjectives[9]} road.
+            <br/> That's the sort of ${nouns[2]} he was.
+            <br/> ${names[1]} gazed with the affection of 5157 pong pigeons.
+            <br/> He said, in ${adjectives[10]} tones, "I love you and I want a ${adjectives[11]} hug.
+            <br/>${names[0]} looked back, even more ${adjectives[12]} and still fingering the ${adjectives[13]} ${nouns[3]}.
+            <br/> "${names[1]} I ate your ${adjectives[14]} puppy" he replied.
+            <hr/>
+            <div id="info">${info}</div>
+            <hr/>
+ 
+            `
+        }
+
+
+        // Controller
+        function chooseName(name){
+            var errorMsg = document.getElementById('error');
+            var chosenName = name.innerHTML;
+
+            if(nameCounter >= 0 && nameCounter <= 1){
+                name.disabled = true;
+                names[nameCounter] = chosenName;
+                nameCounter++;
+                info = "Click the second name.";
+                updateStory();
+                
+                if(nameCounter >= 2){
+                    info = "You have chosen all the names, now choose a noun or adjective.";
+                    updateStory()
+                }
+                else if(adjectiveCounter === 15 && nameCounter === 2 && nounCounter === 4){
+                    finished = 'finished';
+                    disabled = 'disabled';
+                    if(adjectives[0] == 'old-fashioned' &&
+                       adjectives[1] == 'leaking' &&
+                       adjectives[2] == 'incredibly' &&
+                       adjectives[3] == 'cold-blooded' &&
+                       adjectives[4] == 'wobbly' &&
+                       adjectives[5] == 'ruddy' &&
+                       adjectives[6] == 'intense' &&
+                       adjectives[7] == 'joyous' &&
+                       adjectives[8] == 'naughty' &&
+                       adjectives[9] == 'big' &&
+                       adjectives[10] == 'hushed' &&
+                       adjectives[11] == 'soft' &&
+                       adjectives[12] == 'fuzzy' &&
+                       adjectives[13] == 'damp' &&
+                       adjectives[14] == 'little' &&
+                       nouns[0] == 'lake' &&
+                       nouns[1] == 'juggler' &&
+                       nouns[2] == 'man' &&
+                       nouns[3] == 'guillotine' ){
+                           info = `Congratulations, you managed to find the "correct" story!`;
+                           updateView();
+                       }
+                    else{
+                        info = `Yey, you can now read your story in all it's glory! <br/> Some words may seem out of place, that's cause there's a "correct" story.`;
+                        updateView();
+                    }
+                }
+
+                else if(nameCounter >= 2 || names.indexOf(chosenName) > 0){
+                errorMsg.innerHTML = `You have chosen all the names, or you have chosen the same name again.`;
+                errorMsg.style.border = "3px solid red";
+                }
+        }
+    }
+
+
+        function chooseAdjective(word){
+            var errorMsg = document.getElementById('error');
+            var chosenWord = word.innerHTML;
+            if(adjectiveCounter >= 0 && adjectives.length <= 15){
+                word.disabled = true;
+                adjectives[adjectiveCounter] = chosenWord;
+                adjectiveCounter++;
+                info = "Click the word you think fits the next blank field.";
+                updateStory();
+
+                if(adjectiveCounter === 15 && nameCounter === 2 && nounCounter === 4){
+                    finished = 'finished';
+                    disabled = 'disabled';
+                    
+                    if(adjectives[0] == 'old-fashioned' &&
+                       adjectives[1] == 'leaking' &&
+                       adjectives[2] == 'incredibly' &&
+                       adjectives[3] == 'cold-blooded' &&
+                       adjectives[4] == 'wobbly' &&
+                       adjectives[5] == 'ruddy' &&
+                       adjectives[6] == 'intense' &&
+                       adjectives[7] == 'joyous' &&
+                       adjectives[8] == 'naughty' &&
+                       adjectives[9] == 'big' &&
+                       adjectives[10] == 'hushed' &&
+                       adjectives[11] == 'soft' &&
+                       adjectives[12] == 'fuzzy' &&
+                       adjectives[13] == 'damp' &&
+                       adjectives[14] == 'little' &&
+                       nouns[0] == 'lake' &&
+                       nouns[1] == 'juggler' &&
+                       nouns[2] == 'man' &&
+                       nouns[3] == 'guillotine' ){
+                           info = `Congratulations, you managed to find the "correct" story!`;
+                           updateView();
+                       }
+                    else{
+                        info = `Yey, you can now read your story in all it's glory! <br/> Some words may seem out of place, that's cause there's a "correct" story.`;
+                        updateView();
+                    }
+                }
+            }
+    }
+        function chooseNoun(word){
+            var errorMsg = document.getElementById('error');
+            var chosenWord = word.innerHTML;
+            if(nounCounter >= 0 && nouns.length <= 4){
+                word.disabled = true;
+                nouns[nounCounter] = chosenWord;
+                nounCounter++;
+                info = "Click the word you think fits the next blank field.";
+                updateStory();
+
+                if(nounCounter === 1){
+                    endS = 'visible';
+                    updateStory();
+                }
+                else if(adjectiveCounter === 15 && nameCounter === 2 && nounCounter === 4){
+                    finished = 'finished';
+                    disabled = 'disabled';
+                    if(adjectives[0] == 'old-fashioned' &&
+                       adjectives[1] == 'leaking' &&
+                       adjectives[2] == 'incredibly' &&
+                       adjectives[3] == 'cold-blooded' &&
+                       adjectives[4] == 'wobbly' &&
+                       adjectives[5] == 'ruddy' &&
+                       adjectives[6] == 'intense' &&
+                       adjectives[7] == 'joyous' &&
+                       adjectives[8] == 'naughty' &&
+                       adjectives[9] == 'big' &&
+                       adjectives[10] == 'hushed' &&
+                       adjectives[11] == 'soft' &&
+                       adjectives[12] == 'fuzzy' &&
+                       adjectives[13] == 'damp' &&
+                       adjectives[14] == 'little' &&
+                       nouns[0] == 'lake' &&
+                       nouns[1] == 'juggler' &&
+                       nouns[2] == 'man' &&
+                       nouns[3] == 'guillotine' ){
+                           info = `Congratulations, you managed to find the "correct" story!`;
+                           updateView();
+                       }
+                    else{
+                        info = `Yey, you can now read your story in all it's glory! <br/> Some words may seem out of place, that's cause there's a "correct" story.`;
+                        updateView();
+                    }
+                }
+            }
+            else if(nouns.indexOf(chosenWord) > -1){
+                errorMsg.innerHTML = `Already chosen this word, try a different one.`;
+                errorMsg.style.border = "3px solid red";
+            }
+            else{
+                errorMsg.innerHTML = `Wrong word, try a different one.`;
+                errorMsg.style.border = "3px solid red";
+            }
+        }
+    
+
+    </script>
+</body>
+
+</html>
