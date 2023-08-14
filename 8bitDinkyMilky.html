@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <!-- <link rel="stylesheet" href="css/stylesheet.css"> -->
+    <style>
+            body{
+                background-color: pink;
+                display: grid;
+            }
+            #app{
+                padding: 0;
+                margin: 0;
+                display: grid;
+                height: 100vh;
+                grid-template-rows: 1fr 10fr 1fr;
+                grid-template-columns: 1fr 3fr;
+                grid-template-areas: 'Header Header'
+                'Menu MainContent'
+                'Menu Footer';                    
+            }
+            .Header{
+                background-image: url('./GIFs/z45iXFk.gif'); /* https://i.imgur.com/z45iXFk.gif */
+                border: 3px solid #FF80C1; 
+                grid-area: Header;
+                text-align: center;
+                
+            }
+            h1{
+                font-family: 'Press Start 2P';
+            }
+            .Menu{
+                background-color: white;
+                border: 3px solid #FF80C1; 
+                grid-area: Menu;
+                text-align: center;
+                font-family: 'Press Start 2P';
+                color: #FF80C1;
+
+            /* please use ctrl+k+u nerd */
+            }
+            .MainContent{
+                grid-area: MainContent;
+                background-color: white;
+                border: 3px solid #FF80C1;
+                overflow: scroll; 
+                font-family: 'Press Start 2P';
+                color: #FF80C1;
+            }
+            .Footer{
+                background-color: white;
+                grid-area: Footer;
+                border: 3px solid #FF80C1; 
+                font-family: 'Press Start 2P';
+            }
+            /* WEBSIDENS SKR00LBAR BRUH */
+            ::-webkit-scrollbar{
+                width: 15px;
+            }
+            ::-webkit-scrollbar-track{
+                background: white;
+            }
+            ::-webkit-scrollbar-thumb{
+                background: #FF80C1;
+            }
+            ::-webkit-scrollbar-thumb:hover{
+                background: #b65989;
+            }
+            /* DROP DOWN MENYEN */
+            .dropbtn {
+             background-color: #FF80C1;
+             color: white;
+             padding: 16px;
+             font-size: 16px;
+             border: none;
+            }
+
+            .dropdown {
+             position: relative;
+             display: inline-block;
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f1f1f1;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+            .dropdown-content a {
+                color: #FF80C1;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+            .dropdown-content a:hover {background-color: #ddd;}
+
+            .dropdown:hover .dropdown-content {display: block;}
+
+            .dropdown:hover .dropbtn {background-color: #b65989;}
+
+        </style>
+        </head>
+    <body>
+        
+        <div id="app"> <!-- HOVED DIVEN -->
+        </div> <!-- SLUTTEN PÅ HOVED DIVEN -->
+        <script>
+            //Model - Variabler
+            let glass = {
+                flavour: 'EmptyGlass', 
+                straw: '_NS', 
+                bobba: ''
+            };
+
+            // let listOfGlasses = [
+            //     //Milk flavour
+            //     'MILK','SBMILK','BMILK',
+            //     //Milk + Straw 
+            //     'MILK_BS', 'MILK_PINS', 'MILK_PS',
+            //     //
+            //     'BMILK_PS',
+            //     'BMILK_PS',
+            //     'BMILK_PS',
+
+            //     //Milk flavour + Bobba
+            //     '', '',
+            //     //Milk flavour + Straw + Bobba
+            //     '', '', 
+            //     //Empty glass (+ straw)
+            //     '', '',
+            //     ];
+
+
+
+
+
+            let milk = '';
+            let activeMilk = '';
+            let straw = '';
+            let activeStraw = '';
+            let bobba = '';
+            let activeBobba = '';
+
+             //View - Alt vi ser på siden
+            updateView();
+            function updateView(){
+                document.getElementById('app').innerHTML = `
+                <div class="Header">
+                <h1><img src="./GIFs/kcvnGjo.gif" alt="https://i.imgur.com/kcvnGjo.gif"/></h1>
+                </div>
+                <div class="Menu">
+                    <img src="./GIFs/jP0s8H6.gif" alt="https://i.imgur.com/jP0s8H6.gif" width="400px" height="250px" />
+                    <h3>🍑🌸MENU🌸🍨</h3>
+                    <br>
+                    <div class="dropdown">
+                    <button class="dropbtn">MILK</button>
+                    <div class="dropdown-content">
+                    <a href="#" onClick="chooseMilk('BMILK')">Banana🍌</a>
+                    <a href="#" onClick="chooseMilk('SBMILK')">Strawberry🍓</a>
+                    <a href="#" onClick="chooseMilk('MILK')">Plain🥛</a>
+                    </div>
+                    </div>
+                    <div class="dropdown">
+                    <button class="dropbtn">BOBA</button>
+                    <div class="dropdown-content">
+                    <a href="#" onClick="chooseBobba('_SBB')">Strawberry🍓</a>
+                    <a href="#" onClick="chooseBobba('_CB')">Chocolate🍫</a>
+                    <a href="#" onClick="chooseBobba('_VB')">Vanilla🍦</a>
+                    </div>
+                    </div>
+                    <div class="dropdown">
+                    <button class="dropbtn">STRAW</button>
+                    <div class="dropdown-content">
+                    <a href="#" onClick="chooseStraw('_BS')">Blue</a>
+                    <a href="#" onClick="chooseStraw('_PINS')">Pink</a>
+                    <a href="#" onClick="chooseStraw('_PS')">Purple</a>
+                    </div>
+                    </div>
+                    
+                
+                </div>
+                <div class="MainContent">
+                <div style="width: 20px; height: 20px;">
+                    <img src="./ALLGLASSES/${glass.flavour}${glass.straw}${glass.bobba}.png"/>
+                    </div>
+                    
+                    
+                    <br>
+                    
+                    <img src="./GIFs/2r5aCaX.gif" alt="https://i.imgur.com/2r5aCaX.gif" style="float:right" />
+                
+                
+                </div>
+                <div class="Footer">Footer
+                    <audio controls autoplay>
+                    <source src="./music/Nyanyanyanyanyanyanya.mp3" type="audio/ogg"> 
+                    </audio>
+                
+                </div>
+                `}
+            //Controller
+            function chooseMilk(chosenMilk){
+                console.log(chosenMilk);
+                glass.flavour = chosenMilk;
+                updateView();
+            }
+
+            function chooseBobba(chosenBobba){
+                console.log(chosenBobba);
+                glass.bobba = chosenBobba;
+                updateView();
+            }
+
+            function chooseStraw(chosenStraw){
+                console.log(chosenStraw);
+                glass.straw = chosenStraw;
+                updateView();
+            }
+
+        </script>
+    </body>
+</html>
